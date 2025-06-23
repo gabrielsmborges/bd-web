@@ -1,0 +1,39 @@
+@font-face {
+  font-family: 'Byde';
+  src: url('../assets/fonts/Byde-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Byde';
+  src: url('../assets/fonts/Byde-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Byde';
+  src: url('../assets/fonts/Byde-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Byde';
+  src: url('../assets/fonts/Byde-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Byde';
+  src: url('../assets/fonts/Byde-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+}
+
+/* variables */
+:root {
+  --font-byde: 'Byde', sans-serif;
+}
