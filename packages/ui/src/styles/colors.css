@@ -1,0 +1,12 @@
+:root {
+  --byde-sidebar: rgba(0, 0, 0, 0);
+  --byde-sidebar-accent: rgba(255, 255, 255, 0.075);
+  --byde-status-live: #67af6d;
+  --byde-status-draft: #909090;
+  --byde-status-pending: #d2d25b;
+  --byde-status-ended: #af6767;
+}
+
+@theme inline {
+  --color-byde-main: #1a1a1a;
+}

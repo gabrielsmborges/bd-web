@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
 import { ClerkProvider } from '@clerk/nextjs'
-import '@repo/ui/globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
+import { dark } from '@clerk/themes'
+
+import '@repo/ui/globals.css'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -14,8 +16,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark
+      }}
+    >
+      <html lang="en" suppressHydrationWarning className="overflow-y-hidden">
         <body className="antialiased">
           <ThemeProvider
             attribute="class"
