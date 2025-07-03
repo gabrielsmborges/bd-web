@@ -1,7 +1,6 @@
 import { Layout } from '@repo/ui/layout'
 import SidebarHomeLink from '@/components/sidebar/SidebarHomeLink'
 import SidebarProfile from '@/components/sidebar/SidebarProfile'
-import HeaderTitle from '@/components/header/HeaderTitle'
 import { ROUTES } from '@/constants/routes'
 import { SidebarRouteLink } from '@/components/sidebar/SidebarRouteLink'
 import { Separator } from '@repo/ui/components/separator'
@@ -9,7 +8,7 @@ import { BDIcon } from '@/assets/icons'
 import Link from 'next/link'
 
 const BydeSideBar = () => (
-  <Layout.Sidebar variant="floating" className="p-4 pr-0" collapsible="icon">
+  <Layout.Sidebar variant="inset" className="p-4 pr-0" collapsible="icon">
     <Layout.SidebarHeader className="flex flex-row items-center justify-between">
       <Layout.SidebarMenu>
         <SidebarHomeLink />
@@ -77,11 +76,6 @@ const SecureLayout = async ({
     <Layout>
       <BydeSideBar />
       <Layout.Main>
-        <Layout.MainHeader className="flex flex-row items-center gap-4">
-          <Layout.SidebarTrigger />
-          <HeaderTitle />
-        </Layout.MainHeader>
-
         <Layout.MainContent>{children}</Layout.MainContent>
       </Layout.Main>
     </Layout>

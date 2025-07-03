@@ -1,5 +1,5 @@
 import { DashboardSection } from '../DashboardSection'
-import { eventsSample } from '../../sample-data'
+import { eventsSample } from '@/data/sample-data'
 import {
   Table,
   TableBody,
@@ -10,7 +10,7 @@ import {
 } from '@repo/ui/components/table'
 import dayjs from 'dayjs'
 import { formatCurrency } from '@/util/number'
-import { StatusBadge } from '@/components/statusBadge'
+import { EventStatusBadge } from '@/components/statusBadge'
 
 export const UpcomingEventsSection = () => (
   <DashboardSection title="Upcoming Events">
@@ -41,7 +41,7 @@ export const UpcomingEventsSection = () => (
                 })}
               </TableCell>
               <TableCell>
-                <StatusBadge status={event.status} />
+                <EventStatusBadge status={event.status} />
               </TableCell>
             </TableRow>
           ))}

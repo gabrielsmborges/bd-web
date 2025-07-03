@@ -18,7 +18,7 @@ export const SidebarRouteLink = ({
 }) => {
   const pathname = usePathname()
 
-  const isActive = pathname === href
+  const isActive = pathname.startsWith(href)
 
   const opacityClassName = cn({
     'opacity-50': !isActive

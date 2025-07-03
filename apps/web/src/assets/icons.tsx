@@ -8,7 +8,8 @@ import {
   ReceiptText,
   Settings,
   ArrowLeft,
-  Plus
+  Plus,
+  Settings2
 } from 'lucide-react'
 
 export const BDIcons = {
@@ -19,7 +20,8 @@ export const BDIcons = {
   byde: BydeLogo,
   settings: Settings,
   arrowLeft: ArrowLeft,
-  plus: Plus
+  plus: Plus,
+  settings2: Settings2
 }
 
 interface BDIconProps extends LucideProps {

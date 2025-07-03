@@ -27,9 +27,9 @@ export const SalesOverviewSection = () => (
           </h3>
         </div>
         <Button asChild>
-          <Link href={ROUTES.EVENTS} className="w-fit">
-            <BDIcon iconName="calendar" className="h-4 w-4" />
-            View Events
+          <Link href={ROUTES.FINANCE} className="w-fit">
+            <BDIcon iconName="bankNote" className="h-4 w-4" />
+            View Finance
           </Link>
         </Button>
       </SalesOverviewContainer>

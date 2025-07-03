@@ -25,10 +25,7 @@ export const MainHeader = ({
   ...props
 }: React.ComponentProps<'div'>) => {
   return (
-    <div
-      className={cn('bg-byde-main sticky top-0 z-10 p-3', className)}
-      {...props}
-    >
+    <div className={cn('bg-byde-main sticky top-0 z-10', className)} {...props}>
       {children}
     </div>
   )
@@ -40,10 +37,7 @@ export const MainContent = ({
   ...props
 }: React.ComponentProps<'div'>) => {
   return (
-    <div
-      className={cn('h-full flex-1 overflow-y-scroll p-3', className)}
-      {...props}
-    >
+    <div className={cn('h-full flex-1 p-3', className)} {...props}>
       {children}
     </div>
   )

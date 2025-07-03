@@ -39,5 +39,9 @@
   --color-byde-status-draft: var(--byde-status-draft);
   --color-byde-status-pending: var(--byde-status-pending);
   --color-byde-status-ended: var(--byde-status-ended);
+  --color-byde-status-paid: var(--byde-status-paid);
+  --color-byde-status-pending: var(--byde-status-pending);
+  --color-byde-status-cancelled: var(--byde-status-cancelled);
+  --color-byde-status-refunded: var(--byde-status-refunded);
   --font-sans: var(--font-byde);
 }
