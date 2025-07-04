@@ -11,12 +11,16 @@ import {
 import { Layout } from '@repo/ui/layout'
 import dayjs from 'dayjs'
 
-const OrderPage = async ({ params }: { params: { orderId: string } }) => {
+const OrderPage = async ({
+  params
+}: {
+  params: Promise<{ orderId: string }>
+}) => {
   const { orderId } = await params
 
   const order = ordersSample.find((order) => order.orderId === `#${orderId}`)
 
-  if (!order) {
+  if (!order || !orderId) {
     return <div>Order not found</div>
   }
 
