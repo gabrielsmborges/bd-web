@@ -52,7 +52,7 @@ const OrdersPage = async () => {
           </Button>
         </div>
       </Layout.MainHeader>
-      <div className="flex h-full flex-1 flex-col gap-4 overflow-hidden">
+      <div className="flex h-full flex-1 flex-col justify-between gap-4 overflow-hidden">
         <div className="border-accent flex flex-col justify-between gap-4 overflow-y-auto rounded-lg border-1 text-xs">
           <Table className="bg-black/[0.3] text-sm">
             <TableHeader className="bg-white/[0.05]">
