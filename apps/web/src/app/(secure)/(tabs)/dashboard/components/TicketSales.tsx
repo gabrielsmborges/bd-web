@@ -7,15 +7,7 @@ import {
   ChartTooltip,
   ChartTooltipContent
 } from '@repo/ui/components/chart'
-import {
-  Area,
-  AreaChart,
-  Line,
-  LineChart,
-  Tooltip,
-  XAxis,
-  YAxis
-} from 'recharts'
+import { Area, AreaChart, Line, XAxis, YAxis } from 'recharts'
 
 const data = [
   {
