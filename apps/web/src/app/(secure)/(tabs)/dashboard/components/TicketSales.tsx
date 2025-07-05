@@ -1,8 +1,21 @@
 'use client'
 
 import { formatCurrency } from '@/util/number'
-import { ChartConfig, ChartContainer } from '@repo/ui/components/chart'
-import { Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts'
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent
+} from '@repo/ui/components/chart'
+import {
+  Area,
+  AreaChart,
+  Line,
+  LineChart,
+  Tooltip,
+  XAxis,
+  YAxis
+} from 'recharts'
 
 const data = [
   {
@@ -52,7 +65,7 @@ export const TicketSales = () => {
       config={chartConfig}
       className="-translate-x-2 translate-y-3"
     >
-      <LineChart data={data}>
+      <AreaChart accessibilityLayer data={data}>
         <XAxis dataKey="month" />
         <YAxis
           dataKey="revenue"
@@ -62,23 +75,48 @@ export const TicketSales = () => {
             })}`
           }
         />
-        <Tooltip
-          contentStyle={{
-            backgroundColor: '#000000',
-            border: '1px solid #ffffff'
-          }}
-          formatter={(value, name, props) => {
-            return (
-              <p>
-                {formatCurrency(props.payload.revenue, {
-                  notation: 'standard'
-                })}
-              </p>
-            )
-          }}
+
+        <defs>
+          <linearGradient id="fillRevenue" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="5%" stopColor="var(--primary)" stopOpacity={0.8} />
+            <stop offset="95%" stopColor="transparent" stopOpacity={0.1} />
+          </linearGradient>
+        </defs>
+
+        <Area
+          dataKey="revenue"
+          type="monotone"
+          fill="url(#fillRevenue)"
+          fillOpacity={0.4}
+          stroke="var(--primary)"
+        />
+
+        <ChartTooltip
+          content={
+            <ChartTooltipContent
+              labelKey="month"
+              nameKey="revenue"
+              labelFormatter={(value, payload) => {
+                return (
+                  <p className="text-xs font-semibold">
+                    {payload[0].payload.month}
+                  </p>
+                )
+              }}
+              formatter={(value, name, props) => {
+                return (
+                  <p>
+                    {formatCurrency(props.payload.revenue, {
+                      notation: 'standard'
+                    })}
+                  </p>
+                )
+              }}
+            />
+          }
         />
         <Line type="monotone" dataKey="revenue" stroke="#ffffff" dot={false} />
-      </LineChart>
+      </AreaChart>
     </ChartContainer>
   )
 }

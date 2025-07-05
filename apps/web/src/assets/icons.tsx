@@ -9,7 +9,14 @@ import {
   Settings,
   ArrowLeft,
   Plus,
-  Settings2
+  Settings2,
+  BanknoteArrowDown,
+  X,
+  Check,
+  Loader,
+  Eye,
+  CircleDashed,
+  Ellipsis
 } from 'lucide-react'
 
 export const BDIcons = {
@@ -21,7 +28,14 @@ export const BDIcons = {
   settings: Settings,
   arrowLeft: ArrowLeft,
   plus: Plus,
-  settings2: Settings2
+  settings2: Settings2,
+  withdraw: BanknoteArrowDown,
+  x: X,
+  check: Check,
+  loader: Loader,
+  eye: Eye,
+  circleDashed: CircleDashed,
+  ellipsis: Ellipsis
 }
 
 interface BDIconProps extends LucideProps {

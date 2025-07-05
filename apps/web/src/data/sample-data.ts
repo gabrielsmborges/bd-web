@@ -12,6 +12,13 @@ export enum OrderStatus {
     REFUNDED = 'refunded'
 }
 
+export enum PayoutStatus {
+    PAID = 'paid',
+    PENDING = 'pending',
+    UNDER_REVIEW = 'under_review',
+    REJECTED = 'rejected'
+}
+
 export const eventsSample = [
     {
         id: 1,
@@ -125,4 +132,77 @@ export const ordersSample = [
         status: OrderStatus.PENDING,
     }
 
+]
+
+
+export const payoutsSample = [
+    {
+        id: '1234567890',
+        amount: 100,
+        currency: 'GBP',
+        date: new Date('2025-01-01 10:00'),
+        status: PayoutStatus.PAID,
+    },
+    {
+        id: '1234567891',
+        amount: 100,
+        currency: 'GBP',
+        date: new Date('2025-01-01 10:00'),
+        status: PayoutStatus.PENDING,
+    },
+    {
+        id: '1234567892',
+        amount: 100,
+        currency: 'GBP',
+        date: new Date('2025-01-01 10:00'),
+        status: PayoutStatus.UNDER_REVIEW,
+    },
+    {
+        id: '1234567893',
+        amount: 100,
+        currency: 'GBP',
+        date: new Date('2025-01-01 10:00'),
+        status: PayoutStatus.REJECTED,
+    },
+]
+
+export enum BankAccountStatus {
+    VERIFIED = 'verified',
+    UNVERIFIED = 'unverified',
+}
+
+export const bankAccountsSample = [
+    {
+        id: '1234567890',
+        dateAdded: new Date('2025-01-01 10:00'),
+        name: 'Acme Inc',
+        bankName: 'Bank of America',
+        accountNumber: '1234567890',
+        accountType: 'Checking',
+        status: BankAccountStatus.VERIFIED,
+        country: 'United States',
+        currency: 'USD'
+    },
+    {
+        id: '1234567891',
+        dateAdded: new Date('2025-01-01 10:00'),
+        name: 'Acme Ltd.',
+        bankName: 'Barclays',
+        accountNumber: '1234567890',
+        accountType: 'Checking',
+        status: BankAccountStatus.UNVERIFIED,
+        country: 'United Kingdom',
+        currency: 'GBP'
+    },
+    {
+        id: '1234567892',
+        dateAdded: new Date('2025-01-01 10:00'),
+        name: 'Acme Ltd.',
+        bankName: 'HSBC',
+        accountNumber: '1234567890',
+        accountType: 'Checking',
+        status: BankAccountStatus.VERIFIED,
+        country: 'United Kingdom',
+        currency: 'GBP'
+    }
 ]

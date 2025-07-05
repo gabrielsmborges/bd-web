@@ -1,15 +1,9 @@
 import { OrderStatusBadge } from '@/components/statusBadge'
 import { ordersSample } from '@/data/sample-data'
 import { formatCurrency } from '@/util/number'
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator
-} from '@repo/ui/components/breadcrumb'
-import { Layout } from '@repo/ui/layout'
+
 import dayjs from 'dayjs'
+import { Header } from './components/Header'
 
 const OrderPage = async ({
   params
@@ -26,22 +20,7 @@ const OrderPage = async ({
 
   return (
     <div className="flex h-full flex-col gap-2">
-      <Layout.MainHeader className="flex flex-row items-center justify-between gap-4">
-        <div className="flex flex-row items-center gap-4">
-          <Layout.SidebarTrigger />
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/orders">Orders</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem className="font-semibold text-white">
-                <BreadcrumbLink>{order.orderId}</BreadcrumbLink>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
-      </Layout.MainHeader>
+      <Header orderId={orderId} />
 
       {/* display order details */}
       <div className="flex flex-col gap-4">

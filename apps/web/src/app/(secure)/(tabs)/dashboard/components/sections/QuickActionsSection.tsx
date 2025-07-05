@@ -11,7 +11,7 @@ export const QuickActionsSection = () => (
         <BDIcon iconName="plus" className="h-4 w-4" />
         Create Event
       </Button>
-      <Button asChild>
+      <Button variant={'outline'} asChild>
         <Link href={ROUTES.EVENTS}>
           <BDIcon iconName="calendar" className="h-4 w-4" />
           View Events

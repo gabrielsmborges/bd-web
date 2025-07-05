@@ -16,7 +16,7 @@ export const UpcomingEventsSection = () => (
   <DashboardSection title="Upcoming Events">
     <div className="border-accent overflow-scroll rounded-lg border-1 text-xs">
       <Table className="bg-black/[0.3] text-sm">
-        <TableHeader className="bg-white/[0.05]">
+        <TableHeader className="bg-accent sticky top-0">
           <TableRow>
             <TableHead>Name</TableHead>
             <TableHead>Date</TableHead>
@@ -28,7 +28,7 @@ export const UpcomingEventsSection = () => (
         <TableBody>
           {eventsSample.map((event) => (
             <TableRow key={event.id}>
-              <TableCell>{event.title}</TableCell>
+              <TableCell className="font-semibold">{event.title}</TableCell>
               <TableCell>
                 {dayjs(event.dateTime).format('MMM D, YYYY')}
               </TableCell>

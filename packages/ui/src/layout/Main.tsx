@@ -25,7 +25,10 @@ export const MainHeader = ({
   ...props
 }: React.ComponentProps<'div'>) => {
   return (
-    <div className={cn('bg-byde-main sticky top-0 z-10', className)} {...props}>
+    <div
+      {...props}
+      className={cn('bg-byde-main sticky top-0 z-10 min-h-10', className)}
+    >
       {children}
     </div>
   )
@@ -37,7 +40,10 @@ export const MainContent = ({
   ...props
 }: React.ComponentProps<'div'>) => {
   return (
-    <div className={cn('h-full flex-1 p-3', className)} {...props}>
+    <div
+      className={cn('flex h-full flex-1 flex-col gap-2 p-3', className)}
+      {...props}
+    >
       {children}
     </div>
   )

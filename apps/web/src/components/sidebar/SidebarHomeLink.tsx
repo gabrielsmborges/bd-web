@@ -7,7 +7,7 @@ const SidebarHomeLink = () => {
       href="/"
       className="flex flex-row items-center gap-2 group-data-[collapsible=icon]:justify-center"
     >
-      <BDIcon iconName="byde" className="h-8 w-8" />
+      <BDIcon iconName="byde" className="text-primary h-8 w-8" />
       <p className="text-lg font-bold group-data-[collapsible=icon]:hidden">
         byde
       </p>
