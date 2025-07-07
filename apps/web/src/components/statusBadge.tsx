@@ -6,6 +6,7 @@ import {
   PayoutStatus
 } from '@/data/sample-data'
 import { cn } from '@repo/ui/lib/utils'
+import { useTranslations } from 'next-intl'
 
 const MAP_EVENT_STATUS_TO_COLOR = {
   [EventStatus.LIVE]: 'bg-byde-status-live',
@@ -14,14 +15,16 @@ const MAP_EVENT_STATUS_TO_COLOR = {
   [EventStatus.ENDED]: 'bg-byde-status-ended'
 }
 
-const MAP_EVENT_STATUS_TO_TEXT = {
-  [EventStatus.LIVE]: 'Live',
-  [EventStatus.DRAFT]: 'Draft',
-  [EventStatus.PENDING]: 'Pending',
-  [EventStatus.ENDED]: 'Ended'
-}
-
 export const EventStatusBadge = ({ status }: { status: EventStatus }) => {
+  const t = useTranslations('status')
+
+  const MAP_EVENT_STATUS_TO_TEXT = {
+    [EventStatus.LIVE]: t('live'),
+    [EventStatus.DRAFT]: t('draft'),
+    [EventStatus.PENDING]: t('pending'),
+    [EventStatus.ENDED]: t('ended')
+  }
+
   return (
     <div
       className={cn(
@@ -49,14 +52,16 @@ const MAP_ORDER_STATUS_TO_COLOR = {
   [OrderStatus.REFUNDED]: 'bg-byde-status-refunded'
 }
 
-const MAP_ORDER_STATUS_TO_TEXT = {
-  [OrderStatus.PAID]: 'Paid',
-  [OrderStatus.PENDING]: 'Pending',
-  [OrderStatus.CANCELLED]: 'Cancelled',
-  [OrderStatus.REFUNDED]: 'Refunded'
-}
-
 export const OrderStatusBadge = ({ status }: { status: OrderStatus }) => {
+  const t = useTranslations('status')
+
+  const MAP_ORDER_STATUS_TO_TEXT = {
+    [OrderStatus.PAID]: t('paid'),
+    [OrderStatus.PENDING]: t('pending'),
+    [OrderStatus.CANCELLED]: t('cancelled'),
+    [OrderStatus.REFUNDED]: t('refunded')
+  }
+
   return (
     <div
       className={cn(
@@ -84,13 +89,6 @@ const MAP_PAYOUT_STATUS_TO_COLOR = {
   [PayoutStatus.REJECTED]: 'bg-byde-status-cancelled'
 }
 
-const MAP_PAYOUT_STATUS_TO_TEXT = {
-  [PayoutStatus.PAID]: 'Paid',
-  [PayoutStatus.PENDING]: 'Pending',
-  [PayoutStatus.UNDER_REVIEW]: 'Under Review',
-  [PayoutStatus.REJECTED]: 'Rejected'
-}
-
 const MAP_PAYOUT_STATUS_TO_ICON: Record<PayoutStatus, BDIconName> = {
   [PayoutStatus.PAID]: 'check',
   [PayoutStatus.PENDING]: 'loader',
@@ -106,6 +104,15 @@ const MAP_PAYOUT_STATUS_TO_ICON_CLASSNAME: Record<PayoutStatus, string> = {
 }
 
 export const PayoutStatusBadge = ({ status }: { status: PayoutStatus }) => {
+  const t = useTranslations('status')
+
+  const MAP_PAYOUT_STATUS_TO_TEXT = {
+    [PayoutStatus.PAID]: t('paid'),
+    [PayoutStatus.PENDING]: t('pending'),
+    [PayoutStatus.UNDER_REVIEW]: t('underReview'),
+    [PayoutStatus.REJECTED]: t('rejected')
+  }
+
   return (
     <div
       className={cn(
@@ -137,11 +144,6 @@ const MAP_BANK_ACCOUNT_STATUS_TO_COLOR = {
   [BankAccountStatus.UNVERIFIED]: 'bg-byde-status-cancelled'
 }
 
-const MAP_BANK_ACCOUNT_STATUS_TO_TEXT = {
-  [BankAccountStatus.VERIFIED]: 'Verified',
-  [BankAccountStatus.UNVERIFIED]: 'Unverified'
-}
-
 const MAP_BANK_ACCOUNT_STATUS_TO_ICON: Record<BankAccountStatus, BDIconName> = {
   [BankAccountStatus.VERIFIED]: 'check',
   [BankAccountStatus.UNVERIFIED]: 'x'
@@ -160,6 +162,13 @@ export const BankAccountStatusBadge = ({
 }: {
   status: BankAccountStatus
 }) => {
+  const t = useTranslations('status')
+
+  const MAP_BANK_ACCOUNT_STATUS_TO_TEXT = {
+    [BankAccountStatus.VERIFIED]: t('verified'),
+    [BankAccountStatus.UNVERIFIED]: t('unverified')
+  }
+
   return (
     <div
       className={cn(

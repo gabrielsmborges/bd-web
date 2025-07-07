@@ -22,10 +22,13 @@ import {
 } from '@repo/ui/components/table'
 import { cn } from '@repo/ui/lib/utils'
 import dayjs from 'dayjs'
+import { useTranslations } from 'next-intl'
 
 const tableData = [...payoutsSample, ...payoutsSample, ...payoutsSample]
 
 const PayoutsTab = () => {
+  const t = useTranslations('finance')
+
   return (
     <div className="flex min-h-0 flex-col justify-between gap-4">
       <div
@@ -39,9 +42,9 @@ const PayoutsTab = () => {
         <Table className="bg-black/[0.3] text-sm">
           <TableHeader className="bg-accent sticky top-0">
             <TableRow>
-              <TableHead>Amount</TableHead>
-              <TableHead>Date</TableHead>
-              <TableHead>Status</TableHead>
+              <TableHead>{t('amount')}</TableHead>
+              <TableHead>{t('date')}</TableHead>
+              <TableHead>{t('status')}</TableHead>
               <TableHead />
             </TableRow>
           </TableHeader>

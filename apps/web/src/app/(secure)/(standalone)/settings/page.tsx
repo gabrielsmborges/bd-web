@@ -2,8 +2,11 @@ import { BDIcon } from '@/assets/icons'
 import { Button } from '@repo/ui/components/button'
 import { Layout } from '@repo/ui/layout'
 import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
 
 const SecureIndexPage = async () => {
+  const t = await getTranslations('settings')
+
   return (
     <>
       <Layout.MainHeader className="flex flex-row items-center gap-2">
@@ -12,15 +15,13 @@ const SecureIndexPage = async () => {
             <BDIcon iconName="arrowLeft" />
           </Link>
         </Button>
-        <h1 className="text-md font-bold">Settings</h1>
+        <h1 className="text-md font-bold">{t('title')}</h1>
       </Layout.MainHeader>
       <Layout.MainContent>
-        <p className="text-muted-foreground text-sm">
-          Manage your account settings and preferences.
-        </p>
+        <p className="text-muted-foreground text-sm">{t('description')}</p>
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <h2 className="text-sm font-medium">Account</h2>
+            <h2 className="text-sm font-medium">{t('account')}</h2>
           </div>
         </div>
       </Layout.MainContent>

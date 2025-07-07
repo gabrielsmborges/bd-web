@@ -7,8 +7,11 @@ import {
 } from '@repo/ui/components/breadcrumb'
 import { Button } from '@repo/ui/components/button'
 import { Layout } from '@repo/ui/layout'
+import { getTranslations } from 'next-intl/server'
 
-export const Header = () => {
+export const Header = async () => {
+  const t = await getTranslations('navigation')
+
   return (
     <Layout.MainHeader className="flex flex-row items-center justify-between gap-4">
       <div className="flex flex-row items-center gap-4">
@@ -16,7 +19,7 @@ export const Header = () => {
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem className="font-semibold text-white">
-              <BreadcrumbLink>Orders</BreadcrumbLink>
+              <BreadcrumbLink>{t('orders')}</BreadcrumbLink>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
@@ -25,7 +28,7 @@ export const Header = () => {
       <div className="flex flex-row items-center gap-4">
         <Button variant="outline">
           <BDIcon iconName="settings2" className="h-4 w-4" />
-          Filter
+          {t('filter')}
         </Button>
       </div>
     </Layout.MainHeader>

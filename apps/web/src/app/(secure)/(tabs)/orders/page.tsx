@@ -21,10 +21,13 @@ import dayjs from 'dayjs'
 import { ordersSample } from '@/data/sample-data'
 import Link from 'next/link'
 import { Header } from './components/Header'
+import { getTranslations } from 'next-intl/server'
 
 const tableData = [...ordersSample, ...ordersSample, ...ordersSample]
 
 const OrdersPage = async () => {
+  const t = await getTranslations('orders')
+
   return (
     <>
       <Header />
@@ -34,13 +37,13 @@ const OrdersPage = async () => {
           <Table className="bg-black/[0.3] text-sm">
             <TableHeader className="bg-accent sticky top-0">
               <TableRow>
-                <TableHead>Order ID</TableHead>
-                <TableHead>Event</TableHead>
-                <TableHead>Buyer</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Total</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Refund Method</TableHead>
+                <TableHead>{t('orderId')}</TableHead>
+                <TableHead>{t('event')}</TableHead>
+                <TableHead>{t('buyer')}</TableHead>
+                <TableHead>{t('date')}</TableHead>
+                <TableHead>{t('total')}</TableHead>
+                <TableHead>{t('status')}</TableHead>
+                <TableHead>{t('refundMethod')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

@@ -21,6 +21,7 @@ import { cn } from '@repo/ui/lib/utils'
 import { bankAccountsSample } from '@/data/sample-data'
 import { Button } from '@repo/ui/components/button'
 import { BDIcon } from '@/assets/icons'
+import { useTranslations } from 'next-intl'
 
 const tableData = [
   ...bankAccountsSample,
@@ -29,6 +30,8 @@ const tableData = [
 ]
 
 const BankAccountsTab = () => {
+  const t = useTranslations('finance')
+
   return (
     <div className="flex min-h-0 flex-col justify-between gap-4">
       <div
@@ -42,14 +45,14 @@ const BankAccountsTab = () => {
         <Table className="bg-black/[0.3] text-sm">
           <TableHeader className="bg-accent sticky top-0">
             <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Bank</TableHead>
-              <TableHead>Date Added</TableHead>
-              <TableHead>Account Number</TableHead>
-              <TableHead>Account Type</TableHead>
-              <TableHead>Country</TableHead>
-              <TableHead>Currency</TableHead>
-              <TableHead>Status</TableHead>
+              <TableHead>{t('name')}</TableHead>
+              <TableHead>{t('bank')}</TableHead>
+              <TableHead>{t('dateAdded')}</TableHead>
+              <TableHead>{t('accountNumber')}</TableHead>
+              <TableHead>{t('accountType')}</TableHead>
+              <TableHead>{t('country')}</TableHead>
+              <TableHead>{t('currency')}</TableHead>
+              <TableHead>{t('status')}</TableHead>
               <TableHead />
             </TableRow>
           </TableHeader>

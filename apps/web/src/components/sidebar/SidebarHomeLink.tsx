@@ -1,7 +1,10 @@
 import Link from 'next/link'
 import { BDIcon } from '@/assets/icons'
+import { useTranslations } from 'next-intl'
 
 const SidebarHomeLink = () => {
+  const t = useTranslations('navigation')
+
   return (
     <Link
       href="/"
@@ -9,7 +12,7 @@ const SidebarHomeLink = () => {
     >
       <BDIcon iconName="byde" className="text-primary h-8 w-8" />
       <p className="text-lg font-bold group-data-[collapsible=icon]:hidden">
-        byde
+        {t('byde')}
       </p>
     </Link>
   )

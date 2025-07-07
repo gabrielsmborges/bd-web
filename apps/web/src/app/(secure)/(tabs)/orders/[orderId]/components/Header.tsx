@@ -6,8 +6,11 @@ import {
   BreadcrumbSeparator
 } from '@repo/ui/components/breadcrumb'
 import { Layout } from '@repo/ui/layout'
+import { getTranslations } from 'next-intl/server'
 
-export const Header = ({ orderId }: { orderId: string }) => {
+export const Header = async ({ orderId }: { orderId: string }) => {
+  const t = await getTranslations('navigation')
+
   return (
     <Layout.MainHeader className="flex flex-row items-center justify-between gap-4">
       <div className="flex flex-row items-center gap-4">
@@ -15,7 +18,7 @@ export const Header = ({ orderId }: { orderId: string }) => {
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/orders">Orders</BreadcrumbLink>
+              <BreadcrumbLink href="/orders">{t('orders')}</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem className="font-semibold text-white">

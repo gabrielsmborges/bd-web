@@ -6,68 +6,73 @@ import { SidebarRouteLink } from '@/components/sidebar/SidebarRouteLink'
 import { Separator } from '@repo/ui/components/separator'
 import { BDIcon } from '@/assets/icons'
 import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
 
-const BydeSideBar = () => (
-  <Layout.Sidebar variant="inset" className="p-4 pr-0" collapsible="icon">
-    <Layout.SidebarHeader className="flex flex-row items-center justify-between">
-      <Layout.SidebarMenu>
-        <SidebarHomeLink />
-      </Layout.SidebarMenu>
-    </Layout.SidebarHeader>
+const BydeSideBar = async () => {
+  const t = await getTranslations('navigation')
 
-    <Layout.SidebarContent className="mt-6">
-      <Layout.SidebarMenu>
-        <SidebarRouteLink
-          iconName="layoutDashboard"
-          href={ROUTES.DASHBOARD}
-          label="Dashboard"
-        />
+  return (
+    <Layout.Sidebar variant="inset" className="p-4 pr-0" collapsible="icon">
+      <Layout.SidebarHeader className="flex flex-row items-center justify-between">
+        <Layout.SidebarMenu>
+          <SidebarHomeLink />
+        </Layout.SidebarMenu>
+      </Layout.SidebarHeader>
 
-        {/* <SidebarRouteLink
-          iconName="layoutDashboard"
-          href={ROUTES.SELECT_ORGANIZATION}
-          label="Select Organization"
-        /> */}
+      <Layout.SidebarContent className="mt-6">
+        <Layout.SidebarMenu>
+          <SidebarRouteLink
+            iconName="layoutDashboard"
+            href={ROUTES.DASHBOARD}
+            label={t('dashboard')}
+          />
 
-        <SidebarRouteLink
-          iconName="calendar"
-          href={ROUTES.EVENTS}
-          label="Events"
-        />
+          {/* <SidebarRouteLink
+            iconName="layoutDashboard"
+            href={ROUTES.SELECT_ORGANIZATION}
+            label="Select Organization"
+          /> */}
 
-        <SidebarRouteLink
-          iconName="receipt"
-          href={ROUTES.ORDERS}
-          label="Orders"
-        />
+          <SidebarRouteLink
+            iconName="calendar"
+            href={ROUTES.EVENTS}
+            label={t('events')}
+          />
 
-        <SidebarRouteLink
-          iconName="bankNote"
-          href={ROUTES.FINANCE}
-          label="Finance"
-        />
-      </Layout.SidebarMenu>
-    </Layout.SidebarContent>
+          <SidebarRouteLink
+            iconName="receipt"
+            href={ROUTES.ORDERS}
+            label={t('orders')}
+          />
 
-    <Layout.SidebarFooter>
-      <SidebarProfile />
-      <Separator />
-      <Layout.SidebarMenu>
-        <Layout.SidebarMenuItem>
-          <Layout.SidebarMenuButton
-            className="flex flex-row items-center gap-2 opacity-50"
-            asChild
-          >
-            <Link href={ROUTES.SETTINGS}>
-              <BDIcon iconName="settings" className="h-8 w-8" />
-              <span>Settings</span>
-            </Link>
-          </Layout.SidebarMenuButton>
-        </Layout.SidebarMenuItem>
-      </Layout.SidebarMenu>
-    </Layout.SidebarFooter>
-  </Layout.Sidebar>
-)
+          <SidebarRouteLink
+            iconName="bankNote"
+            href={ROUTES.FINANCE}
+            label={t('finance')}
+          />
+        </Layout.SidebarMenu>
+      </Layout.SidebarContent>
+
+      <Layout.SidebarFooter>
+        <SidebarProfile />
+        <Separator />
+        <Layout.SidebarMenu>
+          <Layout.SidebarMenuItem>
+            <Layout.SidebarMenuButton
+              className="flex flex-row items-center gap-2 opacity-50"
+              asChild
+            >
+              <Link href={ROUTES.SETTINGS}>
+                <BDIcon iconName="settings" className="h-8 w-8" />
+                <span>{t('settings')}</span>
+              </Link>
+            </Layout.SidebarMenuButton>
+          </Layout.SidebarMenuItem>
+        </Layout.SidebarMenu>
+      </Layout.SidebarFooter>
+    </Layout.Sidebar>
+  )
+}
 
 const SecureLayout = async ({
   children

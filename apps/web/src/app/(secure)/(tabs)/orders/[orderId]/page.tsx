@@ -4,6 +4,7 @@ import { formatCurrency } from '@/util/number'
 
 import dayjs from 'dayjs'
 import { Header } from './components/Header'
+import { getTranslations } from 'next-intl/server'
 
 const OrderPage = async ({
   params
@@ -11,11 +12,12 @@ const OrderPage = async ({
   params: Promise<{ orderId: string }>
 }) => {
   const { orderId } = await params
+  const t = await getTranslations('orders')
 
   const order = ordersSample.find((order) => order.orderId === `#${orderId}`)
 
   if (!order || !orderId) {
-    return <div>Order not found</div>
+    return <div>{t('orderNotFound')}</div>
   }
 
   return (

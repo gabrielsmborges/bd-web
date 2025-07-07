@@ -22,6 +22,7 @@ import { eventsSample } from '@/data/sample-data'
 import { Header } from './components/Header'
 import { Button } from '@repo/ui/components/button'
 import { BDIcon } from '@/assets/icons'
+import { getTranslations } from 'next-intl/server'
 
 const sampleEvents = [
   ...eventsSample,
@@ -39,6 +40,8 @@ const sampleEvents = [
 const randomisedSampleEvents = sampleEvents.sort(() => Math.random() - 0.5)
 
 const EventsPage = async () => {
+  const t = await getTranslations('events')
+
   return (
     <>
       <Header />
@@ -48,11 +51,11 @@ const EventsPage = async () => {
           <Table className="bg-black/[0.3] text-sm">
             <TableHeader className="bg-accent sticky top-0">
               <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Tickets Sold</TableHead>
-                <TableHead>Revenue</TableHead>
-                <TableHead>Status</TableHead>
+                <TableHead>{t('name')}</TableHead>
+                <TableHead>{t('date')}</TableHead>
+                <TableHead>{t('ticketsSold')}</TableHead>
+                <TableHead>{t('revenue')}</TableHead>
+                <TableHead>{t('status')}</TableHead>
                 <TableHead />
               </TableRow>
             </TableHeader>
