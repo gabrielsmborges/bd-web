@@ -19,7 +19,7 @@ import { StepTwo } from './StepTwo'
 export const CreateEventModal = () => {
   const navigationT = useTranslations('navigation')
 
-  const [, stepOneData] = useState<CreateEventStepOneSchema>()
+  const [stepOneData, setStepOneData] = useState<CreateEventStepOneSchema>()
   const [step, setStep] = useState(1)
 
   const incrementStep = () => setStep(step + 1)
@@ -35,7 +35,11 @@ export const CreateEventModal = () => {
       </DialogTrigger>
       <DialogContent>
         {step === 1 && (
-          <StepOne setFormData={stepOneData} incrementStep={incrementStep} />
+          <StepOne
+            setFormData={setStepOneData}
+            formData={stepOneData}
+            incrementStep={incrementStep}
+          />
         )}
         {step === 2 && (
           <StepTwo

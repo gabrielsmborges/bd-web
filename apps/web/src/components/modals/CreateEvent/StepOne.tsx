@@ -41,9 +41,11 @@ dayjs.extend(timezone)
 
 export const StepOne = ({
   setFormData,
+  formData,
   incrementStep
 }: {
   setFormData: (data: CreateEventStepOneSchema) => void
+  formData?: CreateEventStepOneSchema
   incrementStep: () => void
 }) => {
   const t = useTranslations('modals.createEvent')
@@ -60,14 +62,16 @@ export const StepOne = ({
   const form = useForm<CreateEventStepOneSchema>({
     resolver: zodResolver(createEventStepOneSchema),
     defaultValues: {
-      title: '',
-      description: '',
-      location: '',
-      link: undefined,
-      includeDuration: false,
-      startDate: today.toDate(),
+      title: formData?.title || '',
+      description: formData?.description || '',
+      location: formData?.location || '',
+      link: formData?.link || '',
+      includeDuration: formData?.includeDuration || false,
+      startDate: formData?.startDate || today.toDate(),
       timezoneUTCOffset:
-        options.find((option) => option.value === userTimezone)?.offset || 0
+        formData?.timezoneUTCOffset ||
+        options.find((option) => option.value === userTimezone)?.offset ||
+        0
     }
   })
 
