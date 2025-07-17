@@ -72,8 +72,43 @@ const messages = {
     },
     modals: {
         createEvent: {
-            title: "Are you absolutely sure?",
-            description: "This action cannot be undone. Are you sure you want to permanently delete this file from our servers?"
+            title: "Create an event",
+            description: "Create an event to sell tickets to your audience.",
+
+            fields: {
+                title: {
+                    title: "Title",
+                    placeholder: "The name of you event"
+                },
+                description: {
+                    title: "Description",
+                    placeholder: "Describe your event"
+                },
+                location: {
+                    title: "Location",
+                    placeholder: "Where is it happening"
+                },
+                online: {
+                    title: "Is it happening online?"
+                },
+                link: {
+                    title: "Link",
+                    placeholder: "Conference link"
+                },
+                startDate: {
+                    title: "Start Date",
+                },
+                includeDuration: {
+                    title: "Add end time"
+                },
+                endDate: {
+                    title: "End time"
+                },
+                timezoneUTCOffset: {
+                    title: "Timezone",
+                    placeholder: "Select a timezone"
+                }
+            }
         }
     },
     settings: {

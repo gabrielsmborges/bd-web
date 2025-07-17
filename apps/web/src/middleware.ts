@@ -15,7 +15,6 @@ export default clerkMiddleware(async (auth, req) => {
   const { orgSlug } = await auth()
 
 
-
   if (isProtectedRoute) {
     await auth.protect();
 
@@ -24,6 +23,7 @@ export default clerkMiddleware(async (auth, req) => {
     }
   }
 });
+
 
 export const config = {
   matcher: [

@@ -1,39 +1,52 @@
-import dayjs from "dayjs"
+
 import z from "zod"
 
-const now = dayjs()
-
-const durationSchema = z.object({
-    hours: z.number().min(1),
-    minutes: z.number().min(1)
-})
 
 // if include duration is true then duration is required
-export const createEventSchema = z
+export const createEventStepOneSchema = z
     .object({
         title: z.string().min(1),
         description: z.string().min(1),
-        location: z.string().min(1).optional(),
-        link: z.string().url().optional(),
-        startDate: z.date().min(now.toDate()),
-        includeDuration: z.boolean(),
-        duration: durationSchema.optional()
+        location: z.string().optional(),
+        startDate: z.date().min(new Date()),
+        includeDuration: z.boolean().optional(),
+        endDate: z.date().optional(),
+        link: z.string().url().optional().or(z.literal('')),
+        timezoneUTCOffset: z.number()
     })
     .refine(
+        // end date is required if include duration is true and should be after start date
         (data) => {
-            if (data.includeDuration) {
-                return durationSchema.safeParse(data.duration).success
+            if (data.includeDuration && !data.endDate) {
+                return false
             }
+
+            if (data.endDate && data.endDate < data.startDate) {
+                return false
+            }
+
             return true
         },
         {
-            message: 'Duration is required',
-            path: ['duration'],
+            message: 'End date should be after start date',
+            path: ['endDate'],
             params: {
                 includeDuration: 'includeDuration'
             }
         }
     )
+    .refine(
+        // either link or location is required
+        (data) => {
+            if (data.link || data.location) {
+                return true
+            }
 
-
-export type CreateEventSchema = z.infer<typeof createEventSchema>
+            return false
+        },
+        {
+            message: 'Either link or location is required',
+            path: ['location']
+        },
+    )
+export type CreateEventStepOneSchema = z.infer<typeof createEventStepOneSchema>

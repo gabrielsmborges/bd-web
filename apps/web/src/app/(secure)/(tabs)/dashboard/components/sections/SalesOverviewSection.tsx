@@ -23,7 +23,7 @@ export const SalesOverviewSection = async () => {
             <h3 className="text-5xl font-semibold">
               <span className="text-3xl">{currencySymbols.GBP}</span>
               {formatCurrency(
-                1000,
+                195393.56,
                 {
                   currency: 'GBP'
                 },

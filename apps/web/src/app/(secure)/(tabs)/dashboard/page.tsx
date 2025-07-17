@@ -16,7 +16,9 @@ const DashboardPage = async () => {
 
       <div className="flex h-full w-full flex-col gap-8">
         <p className="text-sm opacity-50">
-          {t('welcomeBack', { name: user?.firstName ?? '' })}
+          {t('welcomeBack', {
+            name: user?.firstName ?? ''
+          })}
         </p>
 
         <QuickActionsSection />
