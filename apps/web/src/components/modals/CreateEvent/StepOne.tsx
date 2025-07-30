@@ -48,7 +48,7 @@ export const StepOne = ({
   formData?: CreateEventStepOneSchema
   incrementStep: () => void
 }) => {
-  const t = useTranslations('modals.createEvent')
+  const t = useTranslations('modals.createEvent.stepOne')
   const navigationT = useTranslations('navigation')
   const { options, parseTimezone } = useTimezoneSelect({
     labelStyle: 'abbrev',
