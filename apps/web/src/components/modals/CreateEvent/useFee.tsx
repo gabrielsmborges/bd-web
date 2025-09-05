@@ -2,7 +2,7 @@
 // IMPORTS
 // =============================================================================
 
-import { formatCurrency } from '@/util/number'
+import { formatCurrency, formatPercentage } from '@/util/number'
 
 // =============================================================================
 // TYPES
@@ -15,6 +15,8 @@ interface UseFeeParams {
 }
 
 interface UseFeeReturn {
+  serviceFeeText: string
+  processingFeeText: string
   ticketPrice: string
   ticketServiceFee: string
   ticketProcessingFee: string
@@ -99,6 +101,13 @@ export const useFee = ({
     ? price - serviceFeeTotal - processingFeeTotal
     : price
 
+  // ====
+  // TEXT
+  // ===========================================================================
+
+  const serviceFeeText = `${formatPercentage(SERVICE_FEE_PERCENTAGE)} + ${formatCurrencyValue(SERVICE_FEE_PRICE, currency)}`
+  const processingFeeText = `${formatPercentage(PROCESSING_FEE_PERCENTAGE)}`
+
   // ===========================================================================
   // FORMATTED VALUES
   // ===========================================================================
@@ -110,6 +119,8 @@ export const useFee = ({
   const ticketPayout = formatCurrencyValue(payout, currency)
 
   return {
+    serviceFeeText,
+    processingFeeText,
     ticketPrice,
     ticketServiceFee,
     ticketProcessingFee,

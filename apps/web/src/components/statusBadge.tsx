@@ -1,28 +1,24 @@
 import { BDIcon, BDIconName } from '@/assets/icons'
 import {
   BankAccountStatus,
-  EventStatus,
   OrderStatus,
   PayoutStatus
 } from '@/data/sample-data'
+import { Event, EventStatus } from '@repo/api'
 import { cn } from '@repo/ui/lib/utils'
 import { useTranslations } from 'next-intl'
 
 const MAP_EVENT_STATUS_TO_COLOR = {
   [EventStatus.LIVE]: 'bg-byde-status-live',
-  [EventStatus.DRAFT]: 'bg-byde-status-draft',
-  [EventStatus.PENDING]: 'bg-byde-status-pending',
-  [EventStatus.ENDED]: 'bg-byde-status-ended'
+  [EventStatus.SCHEDULED]: 'bg-byde-status-pending'
 }
 
-export const EventStatusBadge = ({ status }: { status: EventStatus }) => {
+export const EventStatusBadge = ({ status }: { status: Event['status'] }) => {
   const t = useTranslations('status')
 
   const MAP_EVENT_STATUS_TO_TEXT = {
     [EventStatus.LIVE]: t('live'),
-    [EventStatus.DRAFT]: t('draft'),
-    [EventStatus.PENDING]: t('pending'),
-    [EventStatus.ENDED]: t('ended')
+    [EventStatus.SCHEDULED]: t('scheduled')
   }
 
   return (

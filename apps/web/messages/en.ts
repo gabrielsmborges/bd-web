@@ -61,6 +61,7 @@ const messages = {
     live: 'Live',
     draft: 'Draft',
     pending: 'Pending',
+    scheduled: 'Scheduled',
     ended: 'Ended',
     paid: 'Paid',
     cancelled: 'Cancelled',
@@ -152,15 +153,22 @@ const messages = {
         }
       },
       stepThree: {
-        title: 'Create an event',
-        description: 'Sales',
+        title: 'Sales',
+        description: 'Set the sales dates and quantity',
+
+        nowDescription: 'Tickets will be available as soon as the event is published',
+        whenEventStartsDescription: 'Tickets will be available until the event starts',
 
         fields: {
           salesStart: {
-            title: 'Sales start'
+            title: 'Start selling tickets',
+            now: 'When event is published',
+            later: 'Schedule'
           },
           salesEnd: {
-            title: 'Sales end'
+            title: 'Stop selling tickets',
+            whenEventStarts: 'When the event starts',
+            schedule: 'Schedule'
           },
           quantity: {
             title: 'Quantity',

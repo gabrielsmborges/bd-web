@@ -1,3 +1,4 @@
+import { Pricing } from '@repo/api'
 import z from 'zod'
 
 /*
@@ -58,10 +59,7 @@ export type CreateEventStepOneSchema = z.infer<typeof createEventStepOneSchema>
     Step 2
 */
 
-export enum Pricing {
-  FREE = 'free',
-  PAID = 'paid'
-}
+
 
 export enum Currency {
   GBP = 'GBP',
@@ -88,9 +86,92 @@ const stepTwoFreeSchema = z.object({
   pricing: z.literal(Pricing.FREE)
 })
 
-export const stepTwoSchema = z.discriminatedUnion('pricing', [
+export const createEventStepTwoSchema = z.discriminatedUnion('pricing', [
   stepTwoPaidSchema,
   stepTwoFreeSchema
 ])
 
-export type StepTwoSchema = z.infer<typeof stepTwoSchema>
+export type CreateEventStepTwoSchema = z.infer<typeof createEventStepTwoSchema>
+
+/*
+    Step 3
+*/
+
+export enum SalesStart {
+  NOW = 'now',
+  LATER = 'later'
+}
+
+export enum SalesEnd {
+  EVENT_START = 'event_start',
+  SCHEDULE = 'schedule'
+}
+
+const salesStartSchemaNow = z.object({
+  type: z.literal(SalesStart.NOW),
+})
+
+const salesStartSchemaLater = (startDate: Date) => z.object({
+  type: z.literal(SalesStart.LATER),
+  date: z.date().max(startDate).min(new Date()),
+})
+
+const salesEndSchemaEventStart = z.object({
+  type: z.literal(SalesEnd.EVENT_START),
+})
+
+const salesEndSchemaSchedule = (startDate: Date) => z.object({
+  type: z.literal(SalesEnd.SCHEDULE),
+  date: z.date().max(startDate),
+})
+
+export const createEventStepThreeSchema = (startDate: Date) => {
+  const salesStartSchema = z.discriminatedUnion('type', [
+    salesStartSchemaNow,
+    salesStartSchemaLater(startDate)
+  ])
+
+  const salesEndSchema = z.discriminatedUnion('type', [
+    salesEndSchemaEventStart,
+    salesEndSchemaSchedule(startDate)
+  ])
+
+  return z.object({
+    salesStart: salesStartSchema,
+    salesEnd: salesEndSchema,
+    quantity: z.coerce.number().min(1)
+  })
+}
+
+
+export type CreateEventStepThreeSchema = z.infer<ReturnType<typeof createEventStepThreeSchema>>
+
+/*
+    Step 4
+*/
+
+export enum GoLive {
+  NOW = 'now',
+  SCHEDULE = 'schedule'
+}
+
+const stepFourNowSchema = z.object({
+  type: z.literal(GoLive.NOW)
+})
+
+const stepFourScheduleSchema = z.object({
+  type: z.literal(GoLive.SCHEDULE),
+  date: z.date().min(new Date()),
+})
+
+export const createEventStepFourSchema = z.object({
+  goLive: z.discriminatedUnion('type', [
+    stepFourNowSchema,
+    stepFourScheduleSchema
+  ])
+})
+
+
+export type CreateEventStepFourSchema = z.infer<typeof createEventStepFourSchema>
+
+export type CreateEventSchema = CreateEventStepOneSchema & CreateEventStepTwoSchema & CreateEventStepThreeSchema & CreateEventStepFourSchema

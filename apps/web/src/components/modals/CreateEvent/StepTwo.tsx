@@ -14,9 +14,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import {
   Currency,
   MAP_CURRENCY_TO_SYMBOL,
-  Pricing,
-  StepTwoSchema,
-  stepTwoSchema
+  CreateEventStepTwoSchema,
+  createEventStepTwoSchema,
+  CreateEventSchema
 } from './schema'
 import { useForm } from 'react-hook-form'
 import {
@@ -41,6 +41,7 @@ import { formatCurrency } from '@/util/number'
 import { cn } from '@repo/ui/lib/utils'
 import { useFee } from './useFee'
 import { useEffect } from 'react'
+import { Pricing } from '@repo/api'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -73,21 +74,29 @@ const PricingBreakdownText = ({
 }
 
 export const StepTwo = ({
-  // setFormData,
-  // incrementStep,
+  formData,
+  setFormData,
+  incrementStep,
   decrementStep
 }: {
-  // setFormData: (data: CreateEventSchema) => void
-  // incrementStep: () => void
+  formData?: CreateEventSchema
+  setFormData: (data: CreateEventSchema) => void
+  incrementStep: () => void
   decrementStep: () => void
 }) => {
   const navigationT = useTranslations('navigation')
   const t = useTranslations('modals.createEvent.stepTwo')
 
-  const form = useForm<StepTwoSchema>({
-    resolver: zodResolver(stepTwoSchema),
+  const form = useForm<CreateEventStepTwoSchema>({
+    resolver: zodResolver(createEventStepTwoSchema),
     defaultValues: {
-      pricing: Pricing.FREE
+      pricing: formData?.pricing || Pricing.FREE,
+      // @ts-expect-error - currency is not defined in the schema
+      currency: formData?.currency || Currency.GBP,
+      // @ts-expect-error - price is not defined in the schema
+      price: formData?.price || 0,
+      // @ts-expect-error - absorbFees is not defined in the schema
+      absorbFees: formData?.absorbFees || false
     }
   })
 
@@ -109,20 +118,23 @@ export const StepTwo = ({
     ticketServiceFee,
     ticketProcessingFee,
     ticketCostToBuyer,
-    ticketPayout
+    ticketPayout,
+    serviceFeeText,
+    processingFeeText
   } = useFee({
     price,
     currency,
     absorbFees
   })
 
-  const onSubmit = (data: StepTwoSchema) => {
-    console.log(data)
+  const submitHandler = (data: CreateEventStepTwoSchema) => {
+    setFormData({ ...formData, ...data } as CreateEventSchema)
+    incrementStep()
   }
 
   return (
     <Form {...form}>
-      <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
+      <form className="space-y-8" onSubmit={handleSubmit(submitHandler)}>
         <DialogHeader>
           <DialogTitle>{t('title')}</DialogTitle>
           <DialogDescription>{t('description')}</DialogDescription>
@@ -263,7 +275,7 @@ export const StepTwo = ({
                   <div className="flex justify-between">
                     <PricingBreakdownText variant="secondary">
                       {t('priceBreakdown.serviceFeePerTicket', {
-                        price: ticketServiceFee
+                        price: serviceFeeText
                       })}
                     </PricingBreakdownText>
                     <PricingBreakdownText variant="secondary">
@@ -279,7 +291,9 @@ export const StepTwo = ({
                   </PricingBreakdownText>
                   <div className="flex justify-between">
                     <PricingBreakdownText variant="secondary">
-                      {ticketProcessingFee}
+                      {t('priceBreakdown.processingFeePerTicket', {
+                        price: processingFeeText
+                      })}
                     </PricingBreakdownText>
                     <PricingBreakdownText variant="secondary">
                       {ticketProcessingFee}

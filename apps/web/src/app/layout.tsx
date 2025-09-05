@@ -5,6 +5,7 @@ import { dark } from '@clerk/themes'
 
 import '@repo/ui/globals.css'
 import { NextIntlClientProvider } from 'next-intl'
+import { BdProviders } from '@/providers'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -23,18 +24,24 @@ export default function RootLayout({
           baseTheme: dark
         }}
       >
-        <html lang="en" suppressHydrationWarning className="overflow-y-hidden">
-          <body className="antialiased">
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              {children}
-            </ThemeProvider>
-          </body>
-        </html>
+        <BdProviders>
+          <html
+            lang="en"
+            suppressHydrationWarning
+            className="overflow-y-hidden"
+          >
+            <body className="antialiased">
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+              >
+                {children}
+              </ThemeProvider>
+            </body>
+          </html>
+        </BdProviders>
       </ClerkProvider>
     </NextIntlClientProvider>
   )

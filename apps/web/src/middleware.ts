@@ -1,6 +1,6 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
-import { UNSAFE_ROUTES } from './constants/routes'
-import { redirect } from 'next/navigation'
+import { SAFE_ROUTES, UNSAFE_ROUTES } from './constants/routes'
+import { NextResponse } from 'next/server'
 
 const isPublicRoute = createRouteMatcher([
   `/${UNSAFE_ROUTES.SIGN_IN}(.*)`,
@@ -12,13 +12,17 @@ export default clerkMiddleware(async (auth, req) => {
 
   const { orgSlug } = await auth()
 
+  const hasActiveOrg = !!orgSlug
+
+
   if (isProtectedRoute) {
     await auth.protect()
 
-    if (!orgSlug) {
-      return redirect('/select-org')
+    if (!hasActiveOrg && req.nextUrl.pathname !== SAFE_ROUTES.SELECT_ORGANIZATION) {
+      return NextResponse.redirect(new URL(SAFE_ROUTES.SELECT_ORGANIZATION, req.url))
     }
   }
+
 })
 
 export const config = {

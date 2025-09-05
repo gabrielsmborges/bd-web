@@ -1,11 +1,14 @@
+'use server'
+
 import { BDIcon } from '@/assets/icons'
 import { formatCurrency } from '@/util/number'
 import { Button } from '@repo/ui/components/button'
-import { useTranslations } from 'next-intl'
 
-export const WalletSection = () => {
-  const t = useTranslations('dashboard')
-  const navigationT = useTranslations('navigation')
+import { getTranslations } from 'next-intl/server'
+
+export const WalletSection = async () => {
+  const t = await getTranslations('dashboard')
+  const navigationT = await getTranslations('navigation')
 
   return (
     <section className="justify-start space-y-4">
@@ -18,7 +21,7 @@ export const WalletSection = () => {
           })}
         </p>
 
-        <Button className="w-fit">
+        <Button className="w-fit" type="submit">
           <BDIcon iconName="withdraw" className="h-4 w-4" />
           {navigationT('withdraw')}
         </Button>

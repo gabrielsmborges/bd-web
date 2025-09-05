@@ -34,18 +34,22 @@ import { useTimezoneSelect } from 'react-timezone-select'
 import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
 import dayjs from 'dayjs'
-import { createEventStepOneSchema, CreateEventStepOneSchema } from './schema'
+import {
+  CreateEventSchema,
+  createEventStepOneSchema,
+  CreateEventStepOneSchema
+} from './schema'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
 export const StepOne = ({
-  setFormData,
   formData,
+  setFormData,
   incrementStep
 }: {
-  setFormData: (data: CreateEventStepOneSchema) => void
-  formData?: CreateEventStepOneSchema
+  formData?: CreateEventSchema
+  setFormData: (data: CreateEventSchema) => void
   incrementStep: () => void
 }) => {
   const t = useTranslations('modals.createEvent.stepOne')
@@ -68,6 +72,7 @@ export const StepOne = ({
       link: formData?.link || '',
       includeDuration: formData?.includeDuration || false,
       startDate: formData?.startDate || today.toDate(),
+      endDate: formData?.endDate || undefined,
       timezoneUTCOffset:
         formData?.timezoneUTCOffset ||
         options.find((option) => option.value === userTimezone)?.offset ||
@@ -81,7 +86,7 @@ export const StepOne = ({
   const startDate = watch('startDate')
 
   const submitHandler = (data: CreateEventStepOneSchema) => {
-    setFormData(data)
+    setFormData({ ...formData, ...data } as CreateEventSchema)
     incrementStep()
   }
 

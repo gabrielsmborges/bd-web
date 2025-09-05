@@ -17,6 +17,7 @@ interface Calendar24Props {
   date: Date | undefined
   setDate: (date: Date | undefined) => void
   minDate?: Date
+  maxDate?: Date
   error: boolean
 }
 
@@ -24,6 +25,7 @@ export default function Calendar24({
   date,
   setDate,
   minDate,
+  maxDate,
   error
 }: Calendar24Props) {
   const [open, setOpen] = React.useState(false)
@@ -53,7 +55,8 @@ export default function Calendar24({
                 setOpen(false)
               }}
               disabled={{
-                before: minDate ? minDate : MIN_DATE
+                before: minDate ? minDate : MIN_DATE,
+                after: maxDate
               }}
             />
           </PopoverContent>

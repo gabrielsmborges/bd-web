@@ -10,7 +10,7 @@ import {
 } from '@repo/ui/components/table'
 import dayjs from 'dayjs'
 import { formatCurrency } from '@/util/number'
-import { EventStatusBadge } from '@/components/statusBadge'
+// import { EventStatusBadge } from '@/components/statusBadge'
 import { getTranslations } from 'next-intl/server'
 
 export const UpcomingEventsSection = async () => {
@@ -46,7 +46,7 @@ export const UpcomingEventsSection = async () => {
                   })}
                 </TableCell>
                 <TableCell>
-                  <EventStatusBadge status={event.status} />
+                  {/* <EventStatusBadge status={event.status} /> */}
                 </TableCell>
               </TableRow>
             ))}
