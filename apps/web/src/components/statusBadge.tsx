@@ -10,7 +10,8 @@ import { useTranslations } from 'next-intl'
 
 const MAP_EVENT_STATUS_TO_COLOR = {
   [EventStatus.LIVE]: 'bg-byde-status-live',
-  [EventStatus.SCHEDULED]: 'bg-byde-status-pending'
+  [EventStatus.SCHEDULED]: 'bg-byde-status-pending',
+  [EventStatus.ENDED]: 'bg-byde-status-ended'
 }
 
 export const EventStatusBadge = ({ status }: { status: Event['status'] }) => {
@@ -18,7 +19,8 @@ export const EventStatusBadge = ({ status }: { status: Event['status'] }) => {
 
   const MAP_EVENT_STATUS_TO_TEXT = {
     [EventStatus.LIVE]: t('live'),
-    [EventStatus.SCHEDULED]: t('scheduled')
+    [EventStatus.SCHEDULED]: t('scheduled'),
+    [EventStatus.ENDED]: t('ended')
   }
 
   return (

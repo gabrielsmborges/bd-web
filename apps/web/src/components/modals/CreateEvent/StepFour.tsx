@@ -138,7 +138,7 @@ export const StepFour = ({
                       <Calendar24
                         minDate={new Date()}
                         maxDate={formData?.startDate}
-                        date={field.value || new Date()}
+                        date={field.value}
                         setDate={field.onChange}
                         error={!!goLiveDateError}
                       />

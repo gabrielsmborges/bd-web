@@ -79,7 +79,7 @@ const validateEvent = (event: CreateEventSchema) => {
 const convertDateToUTC = ({ date, timezoneOffset }: { date: Date, timezoneOffset: number }) => {
     const parsedDate = dayjs(date)
     const utcDate = parsedDate.utcOffset(timezoneOffset)
-    return utcDate.toDate()
+    return utcDate.set('seconds', 0).toDate()
 }
 
 
@@ -113,7 +113,7 @@ const buildEvent = (event: CreateEventSchema): CreateEventInput => {
         },
 
         goLive: {
-            date: goLiveDate,
+            date: dayjs(goLiveDate).set('seconds', 0).toDate(),
         }
     }
 

@@ -5,7 +5,8 @@ export enum Pricing {
 
 export enum EventStatus {
     LIVE = 'live',
-    SCHEDULED = 'scheduled'
+    SCHEDULED = 'scheduled',
+    ENDED = 'ended'
 }
 
 export type CreateEventInput = {
