@@ -1,12 +1,10 @@
 import { getBearerToken } from '@/util/api-server'
 import { EventsAPI } from '@repo/api'
 
-export default async function EventPage({
-  params
-}: {
-  params: { eventId: string }
-}) {
-  const { eventId } = params
+type EventParams = Promise<{ eventId: string }>
+
+export default async function EventPage({ params }: { params: EventParams }) {
+  const { eventId } = await params
 
   const eventsAPI = new EventsAPI({
     token: await getBearerToken()
@@ -16,7 +14,7 @@ export default async function EventPage({
 
   return (
     <div>
-      <p>EventPage {params.eventId}</p>
+      <p>EventPage {eventId}</p>
       <p>{JSON.stringify(event, null, 2)}</p>
     </div>
   )
