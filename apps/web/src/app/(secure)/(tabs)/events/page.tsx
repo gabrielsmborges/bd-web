@@ -19,7 +19,7 @@ import {
 } from '@repo/ui/components/table'
 import dayjs from 'dayjs'
 
-import { Header } from './components/Header'
+import { EventsHeader } from './components/Header'
 import { Button } from '@repo/ui/components/button'
 import { BDIcon } from '@/assets/icons'
 import { getTranslations } from 'next-intl/server'
@@ -38,7 +38,7 @@ const EventsPage = async () => {
 
   return (
     <>
-      <Header />
+      <EventsHeader />
 
       {!events.length ? (
         <EmptyState />

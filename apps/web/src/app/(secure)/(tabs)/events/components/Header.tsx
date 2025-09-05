@@ -1,9 +1,11 @@
 import { BDIcon } from '@/assets/icons'
 import { CreateEventModal } from '@/components/modals'
+import { ROUTES } from '@/constants/routes'
 import {
   BreadcrumbItem,
   BreadcrumbLink,
-  BreadcrumbList
+  BreadcrumbList,
+  BreadcrumbSeparator
 } from '@repo/ui/components/breadcrumb'
 
 import { Breadcrumb } from '@repo/ui/components/breadcrumb'
@@ -11,7 +13,7 @@ import { Button } from '@repo/ui/components/button'
 import { Layout } from '@repo/ui/layout'
 import { getTranslations } from 'next-intl/server'
 
-export const Header = async () => {
+export const EventsHeader = async () => {
   const t = await getTranslations('navigation')
 
   return (
@@ -34,6 +36,35 @@ export const Header = async () => {
         </Button>
 
         <CreateEventModal />
+      </div>
+    </Layout.MainHeader>
+  )
+}
+
+type EventHeaderProps = {
+  eventName: string
+}
+
+export const EventHeader = async ({ eventName }: EventHeaderProps) => {
+  const t = await getTranslations('navigation')
+
+  return (
+    <Layout.MainHeader className="flex flex-row items-center justify-between gap-4">
+      <div className="flex flex-row items-center gap-4">
+        <Layout.SidebarTrigger />
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem className="font-semibold text-white">
+              <BreadcrumbLink href={ROUTES.EVENTS}>
+                {t('events')}
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem className="text-muted-foreground">
+              <BreadcrumbLink>{eventName}</BreadcrumbLink>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
       </div>
     </Layout.MainHeader>
   )
