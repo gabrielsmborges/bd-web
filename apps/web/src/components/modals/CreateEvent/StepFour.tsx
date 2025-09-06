@@ -29,7 +29,7 @@ import Calendar24 from '@repo/ui/components/calendar-24'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { BigRadio, RadioGroup } from '@repo/ui/components/radio-group'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -53,7 +53,7 @@ export const StepFour = ({
   const t = useTranslations('modals.createEvent.stepFour')
 
   const form = useForm<CreateEventStepFourSchema>({
-    resolver: zodResolver(createEventStepFourSchema),
+    resolver: zodResolver(createEventStepFourSchema(formData!.startDate)),
     defaultValues: {
       goLive: {
         type: GoLive.NOW
@@ -64,9 +64,13 @@ export const StepFour = ({
   const { control, formState, watch, handleSubmit } = form
 
   const goLive = watch('goLive.type')
+  const [goLiveTime, setGoLiveTime] = useState<string>('')
 
-  // @ts-expect-error - TODO: fix this
-  const goLiveDateError = formState?.errors?.goLiveDate?.message
+  const goLiveDateError =
+    // @ts-expect-error - optional chaining across nested type
+    formState?.errors?.goLive?.date?.message ||
+    // union validation may set message on the union itself
+    formState?.errors?.goLive?.message
 
   const submitHandler = (data: CreateEventStepFourSchema) => {
     setIsLoading(true)
@@ -140,6 +144,20 @@ export const StepFour = ({
                         maxDate={formData?.startDate}
                         date={field.value}
                         setDate={field.onChange}
+                        time={goLiveTime}
+                        setTime={(val) => {
+                          setGoLiveTime(val)
+                          const [h, m] = val
+                            .split(':')
+                            .map((v) => parseInt(v, 10))
+                          const updated = dayjs(field.value || new Date())
+                            .set('hour', h)
+                            .set('minute', m)
+                            .toDate()
+                          form.setValue('goLive.date', updated, {
+                            shouldValidate: true
+                          })
+                        }}
                         error={!!goLiveDateError}
                       />
                     </FormControl>

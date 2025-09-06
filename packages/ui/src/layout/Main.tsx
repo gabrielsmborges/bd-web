@@ -41,7 +41,10 @@ export const MainContent = ({
 }: React.ComponentProps<'div'>) => {
   return (
     <div
-      className={cn('flex h-full flex-1 flex-col gap-2 p-3', className)}
+      className={cn(
+        'flex h-full flex-1 flex-col gap-2 overflow-y-scroll p-3',
+        className
+      )}
       {...props}
     >
       {children}

@@ -61,7 +61,7 @@ const validateEvent = (event: CreateEventSchema) => {
     }
 
     // step 4
-    const validatedEventStepFour = createEventStepFourSchema.safeParse(event)
+    const validatedEventStepFour = createEventStepFourSchema(event.startDate).safeParse(event)
     if (!validatedEventStepFour.success) {
         return {
             error: validatedEventStepFour.error.message

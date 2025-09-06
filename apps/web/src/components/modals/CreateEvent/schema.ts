@@ -1,5 +1,6 @@
 import { Pricing } from '@repo/api'
 import z from 'zod'
+import dayjs from 'dayjs'
 
 /*
     Step 1
@@ -12,8 +13,11 @@ export const createEventStepOneSchema = z
     description: z.string().min(1),
     location: z.string().optional(),
     startDate: z.date().min(new Date()),
+    // time inputs are separate but validated with the date
+    startTime: z.string().optional(),
     includeDuration: z.boolean().optional(),
     endDate: z.date().optional(),
+    endTime: z.string().optional(),
     link: z.string().url().optional().or(z.literal('')),
     timezoneUTCOffset: z.number()
   })
@@ -38,6 +42,58 @@ export const createEventStepOneSchema = z
       }
     }
   )
+  .superRefine((data, ctx) => {
+    // Require startTime and validate combined start date/time is in the future
+    if (!data.startTime || !/^([01]?\d|2[0-3]):[0-5]\d$/.test(data.startTime)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Start time is required and must be HH:mm',
+        path: ['startDate']
+      })
+      return
+    }
+
+    const [sh, sm] = data.startTime.split(':').map((v) => parseInt(v, 10))
+    const start = dayjs(data.startDate).set('hour', sh).set('minute', sm)
+    if (start.isBefore(dayjs())) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Start date/time must be in the future',
+        path: ['startDate']
+      })
+    }
+
+    if (data.includeDuration) {
+      if (!data.endDate) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: 'End date is required',
+          path: ['endDate']
+        })
+        return
+      }
+
+      if (!data.endTime || !/^([01]?\d|2[0-3]):[0-5]\d$/.test(data.endTime)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: 'End time is required and must be HH:mm',
+          path: ['endDate']
+        })
+        return
+      }
+
+      const [eh, em] = data.endTime.split(':').map((v) => parseInt(v, 10))
+      const end = dayjs(data.endDate).set('hour', eh).set('minute', em)
+
+      if (!end.isAfter(start)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: 'End date/time must be after start',
+          path: ['endDate']
+        })
+      }
+    }
+  })
   .refine(
     // either link or location is required
     (data) => {
@@ -159,19 +215,19 @@ const stepFourNowSchema = z.object({
   type: z.literal(GoLive.NOW)
 })
 
-const stepFourScheduleSchema = z.object({
+const stepFourScheduleSchema = (startDate: Date) => z.object({
   type: z.literal(GoLive.SCHEDULE),
-  date: z.date().min(new Date()),
+  date: z.date().min(new Date()).max(startDate),
 })
 
-export const createEventStepFourSchema = z.object({
+export const createEventStepFourSchema = (startDate: Date) => z.object({
   goLive: z.discriminatedUnion('type', [
     stepFourNowSchema,
-    stepFourScheduleSchema
+    stepFourScheduleSchema(startDate)
   ])
 })
 
 
-export type CreateEventStepFourSchema = z.infer<typeof createEventStepFourSchema>
+export type CreateEventStepFourSchema = z.infer<ReturnType<typeof createEventStepFourSchema>>
 
 export type CreateEventSchema = CreateEventStepOneSchema & CreateEventStepTwoSchema & CreateEventStepThreeSchema & CreateEventStepFourSchema

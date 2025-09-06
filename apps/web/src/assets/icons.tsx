@@ -16,7 +16,11 @@ import {
   Loader,
   Eye,
   CircleDashed,
-  Ellipsis
+  Ellipsis,
+  MapPin,
+  Clock,
+  Edit,
+  Trash
 } from 'lucide-react'
 
 export const BDIcons = {
@@ -35,7 +39,12 @@ export const BDIcons = {
   loader: Loader,
   eye: Eye,
   circleDashed: CircleDashed,
-  ellipsis: Ellipsis
+  ellipsis: Ellipsis,
+  mapPin: MapPin,
+  clock: Clock,
+  banknote: Banknote,
+  edit: Edit,
+  delete: Trash
 }
 
 interface BDIconProps extends LucideProps {

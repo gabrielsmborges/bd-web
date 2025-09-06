@@ -32,7 +32,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { RadioGroup, RadioGroupItem } from '@repo/ui/components/radio-group'
 import { Label } from '@repo/ui/components/label'
 import { Input } from '@repo/ui/components/input'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -77,6 +77,8 @@ export const StepThree = ({
 
   const salesStart = watch('salesStart.type')
   const salesEnd = watch('salesEnd.type')
+  const [salesStartTime, setSalesStartTime] = useState<string>('')
+  const [salesEndTime, setSalesEndTime] = useState<string>('')
 
   const submitHandler = (data: CreateEventStepThreeSchema) => {
     setFormData({
@@ -159,15 +161,41 @@ export const StepThree = ({
                           minDate={now}
                           date={new Date(field.value)}
                           setDate={field.onChange}
-                          error={!!formState?.errors['salesStart']?.message}
+                          time={salesStartTime}
+                          setTime={(val) => {
+                            setSalesStartTime(val)
+                            const [h, m] = val
+                              .split(':')
+                              .map((v) => parseInt(v, 10))
+                            const updated = dayjs(field.value || now)
+                              .set('hour', h)
+                              .set('minute', m)
+                              .toDate()
+                            form.setValue('salesStart.date', updated, {
+                              shouldValidate: true
+                            })
+                          }}
+                          error={
+                            // @ts-expect-error - optional chaining across nested type
+                            !!formState?.errors?.salesStart?.date?.message ||
+                            !!formState?.errors?.salesStart?.message
+                          }
                         />
                       </FormControl>
 
-                      {formState?.errors?.['salesStart'] && (
-                        <FormMessage>
-                          {formState?.errors['salesStart']?.message}
-                        </FormMessage>
-                      )}
+                      {
+                        // @ts-expect-error - optional chaining across nested type
+                        (formState?.errors?.salesStart?.date?.message ||
+                          formState?.errors?.salesStart?.message) && (
+                          <FormMessage>
+                            {
+                              // @ts-expect-error - optional chaining across nested type
+                              formState?.errors?.salesStart?.date?.message ||
+                                formState?.errors?.salesStart?.message
+                            }
+                          </FormMessage>
+                        )
+                      }
                     </FormItem>
                   )
                 }}
@@ -231,15 +259,41 @@ export const StepThree = ({
                         maxDate={formData?.startDate}
                         date={field.value}
                         setDate={field.onChange}
-                        error={!!formState?.errors['salesEnd']?.message}
+                        time={salesEndTime}
+                        setTime={(val) => {
+                          setSalesEndTime(val)
+                          const [h, m] = val
+                            .split(':')
+                            .map((v) => parseInt(v, 10))
+                          const updated = dayjs(field.value || now)
+                            .set('hour', h)
+                            .set('minute', m)
+                            .toDate()
+                          form.setValue('salesEnd.date', updated, {
+                            shouldValidate: true
+                          })
+                        }}
+                        error={
+                          // @ts-expect-error - optional chaining across nested type
+                          !!formState?.errors?.salesEnd?.date?.message ||
+                          !!formState?.errors?.salesEnd?.message
+                        }
                       />
                     </FormControl>
 
-                    {formState?.errors?.['salesEnd'] && (
-                      <FormMessage>
-                        {formState?.errors['salesEnd']?.message}
-                      </FormMessage>
-                    )}
+                    {
+                      // @ts-expect-error - optional chaining across nested type
+                      (formState?.errors?.salesEnd?.date?.message ||
+                        formState?.errors?.salesEnd?.message) && (
+                        <FormMessage>
+                          {
+                            // @ts-expect-error - optional chaining across nested type
+                            formState?.errors?.salesEnd?.date?.message ||
+                              formState?.errors?.salesEnd?.message
+                          }
+                        </FormMessage>
+                      )
+                    }
                   </FormItem>
                 )}
               />

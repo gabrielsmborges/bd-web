@@ -16,6 +16,8 @@ const MIN_DATE = new Date('1970-01-01')
 interface Calendar24Props {
   date: Date | undefined
   setDate: (date: Date | undefined) => void
+  time: string
+  setTime: (time: string) => void
   minDate?: Date
   maxDate?: Date
   error: boolean
@@ -24,6 +26,8 @@ interface Calendar24Props {
 export default function Calendar24({
   date,
   setDate,
+  time,
+  setTime,
   minDate,
   maxDate,
   error
@@ -50,8 +54,14 @@ export default function Calendar24({
               mode="single"
               selected={date}
               captionLayout="dropdown"
-              onSelect={(date) => {
-                setDate(date)
+              onSelect={(newDate) => {
+                const previousHours = dayjs(date).hour()
+                const previousMinutes = dayjs(date).minute()
+                const newDateWithHours = dayjs(newDate)
+                  .set('hour', previousHours)
+                  .set('minute', previousMinutes)
+                  .toDate()
+                setDate(newDateWithHours)
                 setOpen(false)
               }}
               disabled={{
@@ -66,21 +76,9 @@ export default function Calendar24({
         <Input
           type="time"
           aria-invalid={error}
-          value={date ? dayjs(date).format('HH:mm') : undefined}
-          // min={
-          //   date
-          //     ? dayjs(date).isSame(dayjs(), 'day')
-          //       ? dayjs().format('HH:mm')
-          //       : undefined
-          //     : undefined
-          // }
+          value={time}
           onChange={(e) => {
-            const [hours, minutes] = e.target.value.split(':')
-            const newDate = dayjs(date)
-              .set('hour', parseInt(hours ?? '0'))
-              .set('minute', parseInt(minutes ?? '0'))
-              .toDate()
-            setDate(newDate)
+            setTime(e.target.value)
           }}
         />
       </div>

@@ -39,6 +39,7 @@ import {
   createEventStepOneSchema,
   CreateEventStepOneSchema
 } from './schema'
+import { useEffect, useState } from 'react'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -59,6 +60,9 @@ export const StepOne = ({
     displayValue: 'GMT'
   })
 
+  const [startTime, setStartTime] = useState<string>('')
+  const [endTime, setEndTime] = useState<string>('')
+
   const userTimezone = dayjs.tz.guess()
 
   const today = dayjs()
@@ -73,6 +77,8 @@ export const StepOne = ({
       includeDuration: formData?.includeDuration || false,
       startDate: formData?.startDate || today.toDate(),
       endDate: formData?.endDate || undefined,
+      startTime: '',
+      endTime: '',
       timezoneUTCOffset:
         formData?.timezoneUTCOffset ||
         options.find((option) => option.value === userTimezone)?.offset ||
@@ -85,8 +91,32 @@ export const StepOne = ({
   const addEndTime = watch('includeDuration')
   const startDate = watch('startDate')
 
+  useEffect(() => {
+    // keep times in form state so schema can validate date+time together
+    form.setValue('startTime', startTime, { shouldValidate: true })
+    if (addEndTime) {
+      form.setValue('endTime', endTime, { shouldValidate: true })
+    }
+  }, [startTime, endTime, addEndTime, form])
+
   const submitHandler = (data: CreateEventStepOneSchema) => {
-    setFormData({ ...formData, ...data } as CreateEventSchema)
+    const startDate = dayjs(data.startDate)
+      .set('hour', parseInt(startTime.split(':')[0]))
+      .set('minute', parseInt(startTime.split(':')[1]))
+      .toDate()
+
+    const endDate = addEndTime && data.endDate && endTime
+      ? dayjs(data.endDate)
+          .set('hour', parseInt(endTime.split(':')[0]))
+          .set('minute', parseInt(endTime.split(':')[1]))
+          .toDate()
+      : undefined
+    setFormData({
+      ...formData,
+      ...data,
+      startDate,
+      endDate
+    } as CreateEventSchema)
     incrementStep()
   }
 
@@ -194,7 +224,6 @@ export const StepOne = ({
                     defaultValue={userTimezone}
                     onValueChange={(e) => {
                       const parsedTimezone = parseTimezone(e)
-
                       field.onChange(parsedTimezone.offset)
                     }}
                   >
@@ -238,6 +267,11 @@ export const StepOne = ({
                     minDate={new Date()}
                     date={new Date(field.value)}
                     setDate={field.onChange}
+                    time={startTime}
+                    setTime={(val) => {
+                      setStartTime(val)
+                      form.setValue('startTime', val, { shouldValidate: true })
+                    }}
                     error={!!formState?.errors[field.name]?.message}
                   />
                 </FormControl>
@@ -295,6 +329,11 @@ export const StepOne = ({
                     minDate={startDate}
                     date={field.value}
                     setDate={field.onChange}
+                    time={endTime}
+                    setTime={(val) => {
+                      setEndTime(val)
+                      form.setValue('endTime', val, { shouldValidate: true })
+                    }}
                     error={!!formState?.errors[field.name]?.message}
                   />
                 </FormControl>
