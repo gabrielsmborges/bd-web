@@ -28,7 +28,7 @@ type EventHeaderProps = {
   eventName: string
 }
 
-export const EventHeader = async ({ eventName }: EventHeaderProps) => {
+const EventHeader = async ({ eventName }: EventHeaderProps) => {
   const t = await getTranslations('navigation')
 
   return (
